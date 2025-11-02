@@ -1,7 +1,21 @@
 // 🔌 Serviço de API para conectar com backend Python
 
 // URL base da API - altere quando fizer deploy do backend
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+const API_BASE_URL = (() => {
+  const env = (import.meta.env.VITE_API_URL as string | undefined)?.trim();
+  if (env) return env.replace(/\/$/, "");
+  const { hostname } = window.location;
+  // GitHub Codespaces: troca o sufixo de porta pelo 8000
+  if (/\.app\.github\.dev$/.test(hostname)) {
+    const apiHost = hostname.replace(/-(\d+)\.app\.github\.dev$/, '-8000.app.github.dev');
+    return `https://${apiHost}/api`;
+  }
+  if (/\.githubpreview\.dev$/.test(hostname)) {
+    const apiHost = hostname.replace(/-(\d+)\.githubpreview\.dev$/, '-8000.githubpreview.dev');
+    return `https://${apiHost}/api`;
+  }
+  return 'http://localhost:8000/api';
+})();
 
 // ===== TIPOS =====
 
@@ -12,9 +26,9 @@ export interface User {
   user_type: 'student' | 'teacher';
 }
 
-export interface AuthResponse {
-  success: boolean;
-  token: string;
+export interface AuthTokenResponse {
+  access_token: string;
+  token_type: string;
   user: User;
 }
 
@@ -76,29 +90,34 @@ export const authApi = {
     email: string;
     password: string;
     user_type: string;
-  }): Promise<{ success: boolean; message: string; user: User }> {
+  }): Promise<AuthTokenResponse> {
     const response = await fetch(`${API_BASE_URL}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
-    return handleResponse(response);
+    const result = await handleResponse<AuthTokenResponse>(response);
+    if (result.access_token) {
+      localStorage.setItem('auth_token', result.access_token);
+      localStorage.setItem('user', JSON.stringify(result.user));
+    }
+    return result;
   },
 
   async login(data: {
     email: string;
     password: string;
-  }): Promise<AuthResponse> {
+  }): Promise<AuthTokenResponse> {
     const response = await fetch(`${API_BASE_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
-    const result = await handleResponse<AuthResponse>(response);
+    const result = await handleResponse<AuthTokenResponse>(response);
     
     // Salvar token no localStorage
-    if (result.token) {
-      localStorage.setItem('auth_token', result.token);
+    if (result.access_token) {
+      localStorage.setItem('auth_token', result.access_token);
       localStorage.setItem('user', JSON.stringify(result.user));
     }
     

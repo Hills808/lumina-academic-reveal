@@ -17,6 +17,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
+    allow_origin_regex=r".*",  # Permite subdomínios dinâmicos (Codespaces, previews) em DEV
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
