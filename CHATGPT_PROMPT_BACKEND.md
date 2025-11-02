@@ -22,11 +22,34 @@ Criar uma API REST completa com FastAPI que gerencia:
 
 ### Backend
 - **Framework**: FastAPI
-- **Linguagem**: Python 3.10+
+- **Linguagem**: Python 3.10, 3.11 ou 3.12 (RECOMENDADO: 3.11)
+- **⚠️ IMPORTANTE**: Se estiver usando Python 3.13+ ou 3.14+, algumas dependências podem não ser compatíveis
 - **Autenticação**: JWT (JSON Web Tokens)
 - **Hash de Senhas**: bcrypt
 - **Validação**: Pydantic
 - **CORS**: Configurado para permitir frontend
+
+### ⚠️ COMPATIBILIDADE DE VERSÃO DO PYTHON
+
+**Se você está usando Python 3.13+ ou 3.14+:**
+
+1. **Opção 1 (RECOMENDADA)**: Instale Python 3.11 ou 3.12
+   - Python 3.11 tem melhor compatibilidade com todas as bibliotecas
+   - Download: https://www.python.org/downloads/
+
+2. **Opção 2**: Use pyenv para gerenciar versões
+   ```bash
+   # Instalar pyenv
+   curl https://pyenv.run | bash
+   
+   # Instalar Python 3.11
+   pyenv install 3.11.9
+   pyenv local 3.11.9
+   ```
+
+3. **Opção 3**: Atualize as dependências (pode ter bugs)
+   - Algumas bibliotecas podem não funcionar corretamente
+   - Você pode precisar ajustar versões no requirements.txt
 
 ### Banco de Dados (ESCOLHA UMA)
 **Opção 1 (Recomendada)**: PostgreSQL com SQLAlchemy
