@@ -35,6 +35,8 @@ const API_BASE_URL = (() => {
   return 'http://localhost:8000/api';
 })();
 
+console.info('[API] Base URL:', API_BASE_URL);
+
 // ===== TIPOS =====
 
 export interface User {
@@ -115,37 +117,51 @@ export const authApi = {
     password: string;
     user_type: string;
   }): Promise<AuthTokenResponse> {
-    const response = await fetch(`${API_BASE_URL}/auth/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    const result = await handleResponse<AuthTokenResponse>(response);
-    if (result.access_token) {
-      localStorage.setItem('auth_token', result.access_token);
-      localStorage.setItem('user', JSON.stringify(result.user));
+    try {
+      const url = `${API_BASE_URL}/auth/register`;
+      console.info('[API] POST', url, data);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const result = await handleResponse<AuthTokenResponse>(response);
+      if (result.access_token) {
+        localStorage.setItem('auth_token', result.access_token);
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
+      return result;
+    } catch (err: any) {
+      console.error('[API] register error', err);
+      throw new Error(`Falha ao conectar na API (${API_BASE_URL}). Verifique a URL e tente novamente. Detalhe: ${err?.message || err}`);
     }
-    return result;
   },
 
   async login(data: {
     email: string;
     password: string;
   }): Promise<AuthTokenResponse> {
-    const response = await fetch(`${API_BASE_URL}/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    const result = await handleResponse<AuthTokenResponse>(response);
-    
-    // Salvar token no localStorage
-    if (result.access_token) {
-      localStorage.setItem('auth_token', result.access_token);
-      localStorage.setItem('user', JSON.stringify(result.user));
+    try {
+      const url = `${API_BASE_URL}/auth/login`;
+      console.info('[API] POST', url, { email: data.email });
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const result = await handleResponse<AuthTokenResponse>(response);
+      
+      // Salvar token no localStorage
+      if (result.access_token) {
+        localStorage.setItem('auth_token', result.access_token);
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
+      
+      return result;
+    } catch (err: any) {
+      console.error('[API] login error', err);
+      throw new Error(`Falha ao conectar na API (${API_BASE_URL}). Verifique a URL e tente novamente. Detalhe: ${err?.message || err}`);
     }
-    
-    return result;
   },
 
   logout() {
