@@ -14,7 +14,10 @@ class Settings(BaseSettings):
     CORS_ORIGINS: list = [
         "http://localhost:5173",
         "http://localhost:3000",
-        "https://*.lovable.app"
+        "https://*.lovable.app",
+        "https://*.lovableproject.com",
+        "https://*.githubpreview.dev",
+        "https://*.app.github.dev"
     ]
     
     # File Storage
