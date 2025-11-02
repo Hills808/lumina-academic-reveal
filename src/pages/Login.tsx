@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { authApi } from "@/services/api";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -16,16 +17,33 @@ const Login = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // TODO: Conectar com backend Python
-    console.log("Login:", { email, password, userType });
-    
-    toast({
-      title: "Login realizado!",
-      description: `Bem-vindo, ${userType === "student" ? "aluno" : "professor"}!`,
-    });
+    try {
+      const result = await authApi.login({ email, password });
+      
+      // Verifica se o tipo de usuário corresponde
+      if (result.user.user_type !== userType) {
+        toast({
+          title: "Erro no login",
+          description: `Este usuário está cadastrado como ${result.user.user_type === "student" ? "aluno" : "professor"}`,
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      toast({
+        title: "Login realizado!",
+        description: `Bem-vindo, ${result.user.name}!`,
+      });
 
-    // Redireciona baseado no tipo de usuário
-    navigate(userType === "student" ? "/aluno" : "/professor");
+      // Redireciona baseado no tipo de usuário
+      navigate(userType === "student" ? "/aluno" : "/professor");
+    } catch (error) {
+      toast({
+        title: "Erro no login",
+        description: error instanceof Error ? error.message : "Verifique suas credenciais",
+        variant: "destructive",
+      });
+    }
   };
 
   return (

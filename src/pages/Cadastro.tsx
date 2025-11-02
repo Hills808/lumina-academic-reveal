@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { authApi } from "@/services/api";
 
 const Cadastro = () => {
   const [name, setName] = useState("");
@@ -27,15 +28,27 @@ const Cadastro = () => {
       return;
     }
 
-    // TODO: Conectar com backend Python
-    console.log("Cadastro:", { name, email, password, userType });
+    try {
+      await authApi.register({
+        name,
+        email,
+        password,
+        user_type: userType,
+      });
 
-    toast({
-      title: "Cadastro realizado!",
-      description: "Você já pode fazer login.",
-    });
+      toast({
+        title: "Cadastro realizado!",
+        description: "Você já pode fazer login.",
+      });
 
-    navigate("/login");
+      navigate("/login");
+    } catch (error) {
+      toast({
+        title: "Erro no cadastro",
+        description: error instanceof Error ? error.message : "Tente novamente",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
