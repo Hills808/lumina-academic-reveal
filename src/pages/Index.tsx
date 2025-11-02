@@ -61,9 +61,9 @@ const Index = () => {
           currentLine++;
         } else {
           clearInterval(interval);
-          setTimeout(() => setShowRealSite(true), 800);
+          setTimeout(() => setShowRealSite(true), 1200);
         }
-      }, 50);
+      }, 80);
 
       return () => clearInterval(interval);
     }
@@ -185,22 +185,30 @@ const Index = () => {
 
   if (showAnimation) {
     return (
-      <div className="min-h-screen bg-[#1e1e1e] text-[#d4d4d4] font-mono p-8 relative overflow-auto transition-all duration-500">
+      <div className="min-h-screen bg-[#1e1e1e] text-[#d4d4d4] font-mono p-8 relative overflow-auto">
         <Button
           onClick={skipAnimation}
-          className="fixed top-4 right-4 z-50 animate-fade-in"
+          className="fixed top-4 right-4 z-50 opacity-0 animate-[fade-in_0.5s_ease-out_0.5s_forwards]"
           variant="outline"
+          size="sm"
         >
           Pular
         </Button>
-        <div className="mb-4 flex items-center gap-2 text-sm opacity-60">
-          <span className="text-[#4ec9b0]">main.py</span>
-          <span className="text-[#6a9955]">•</span>
-          <span className="text-[#4ec9b0]">index.html</span>
+        <div className="mb-6 flex items-center gap-2 text-sm opacity-0 animate-[fade-in_0.4s_ease-out_0.2s_forwards]">
+          <div className="flex gap-2">
+            <div className="w-3 h-3 rounded-full bg-red-500"></div>
+            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+          </div>
+          <span className="ml-4 text-[#858585]">main.py</span>
         </div>
-        <pre className="text-sm leading-relaxed">
+        <pre className="text-sm leading-loose">
           {codeLines.map((line, index) => (
-            <div key={index} className="opacity-0 animate-[fade-in_0.3s_ease-out_forwards]" style={{ animationDelay: `${index * 0.03}s` }}>
+            <div 
+              key={index} 
+              className="opacity-0 translate-y-1 animate-[fade-in_0.6s_ease-out_forwards]" 
+              style={{ animationDelay: `${index * 0.08}s` }}
+            >
               {line}
             </div>
           ))}
@@ -224,18 +232,15 @@ const Index = () => {
 
   // Simple initial version - looks rushed
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted/20 flex items-center justify-center p-4">
-      <div className="w-full max-w-sm space-y-8 text-center">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+      <div className="w-full max-w-xs space-y-6 text-center">
+        <h1 className="text-2xl font-bold">LUMINA</h1>
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">LUMINA</h1>
-          <p className="text-sm text-muted-foreground">Sistema Acadêmico</p>
-        </div>
-        <div className="space-y-3">
-          <Button onClick={handleButtonClick} className="w-full transition-all duration-300" size="lg">
+          <Button onClick={handleButtonClick} className="w-full" variant="default">
             Entrar
           </Button>
-          <Button onClick={handleButtonClick} variant="outline" className="w-full transition-all duration-300" size="lg">
-            Criar Conta
+          <Button onClick={handleButtonClick} className="w-full" variant="outline">
+            Cadastrar
           </Button>
         </div>
       </div>
