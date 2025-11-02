@@ -2,12 +2,26 @@
 
 // URL base da API - altere quando fizer deploy do backend
 const API_BASE_URL = (() => {
+  // Permite override via query (?api=URL) e persiste em localStorage
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const paramApi = params.get('api');
+    if (paramApi) {
+      const clean = paramApi.trim().replace(/\/$/, '');
+      localStorage.setItem('api_base_url', clean);
+    }
+  } catch {}
+
+  const stored = localStorage.getItem('api_base_url');
   const envRaw = (import.meta.env.VITE_API_URL as string | undefined)?.trim();
-  if (envRaw) {
-    let base = envRaw.replace(/\/$/, "");
+  let base = stored || envRaw || '';
+
+  if (base) {
+    base = base.replace(/\/$/, "");
     if (!/\/api$/.test(base)) base += "/api";
     return base;
   }
+
   const { hostname } = window.location;
   // GitHub Codespaces: troca o sufixo de porta pelo 8000
   if (/\.app\.github\.dev$/.test(hostname)) {
