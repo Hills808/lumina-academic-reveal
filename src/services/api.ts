@@ -1,7 +1,7 @@
 // 🔌 Serviço de API para conectar com backend Python
 
 // URL base da API - altere quando fizer deploy do backend
-const API_BASE_URL = (() => {
+export const API_BASE_URL = (() => {
   // Permite override via query (?api=URL) e persiste em localStorage
   try {
     const params = new URLSearchParams(window.location.search);
@@ -34,6 +34,8 @@ const API_BASE_URL = (() => {
   }
   return 'http://localhost:8000/api';
 })();
+
+export const API_HOST = API_BASE_URL.replace(/\/api$/, "");
 
 console.info('[API] Base URL:', API_BASE_URL);
 
