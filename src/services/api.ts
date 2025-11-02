@@ -2,8 +2,12 @@
 
 // URL base da API - altere quando fizer deploy do backend
 const API_BASE_URL = (() => {
-  const env = (import.meta.env.VITE_API_URL as string | undefined)?.trim();
-  if (env) return env.replace(/\/$/, "");
+  const envRaw = (import.meta.env.VITE_API_URL as string | undefined)?.trim();
+  if (envRaw) {
+    let base = envRaw.replace(/\/$/, "");
+    if (!/\/api$/.test(base)) base += "/api";
+    return base;
+  }
   const { hostname } = window.location;
   // GitHub Codespaces: troca o sufixo de porta pelo 8000
   if (/\.app\.github\.dev$/.test(hostname)) {
@@ -76,8 +80,14 @@ function getAuthHeader() {
 
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Erro desconhecido' }));
-    throw new Error(error.error || `Erro: ${response.status}`);
+    let message = `Erro: ${response.status}`;
+    try {
+      const data = await response.json();
+      if (typeof data?.detail === "string") message = data.detail;
+      else if (Array.isArray(data?.detail) && data.detail[0]?.msg) message = data.detail[0].msg;
+      else if (data?.error) message = data.error;
+    } catch {}
+    throw new Error(message);
   }
   return response.json();
 }
