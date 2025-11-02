@@ -1,73 +1,260 @@
-# Welcome to your Lovable project
+# 🎓 LUMINA - Plataforma Educacional
 
-## Project info
+Sistema completo de gestão educacional com dashboard para alunos e professores.
 
-**URL**: https://lovable.dev/projects/e4595ccc-e3fa-48cc-a0aa-83631c9a7906
+![Stack](https://img.shields.io/badge/React-18.3-blue)
+![Stack](https://img.shields.io/badge/Python-3.11-green)
+![Stack](https://img.shields.io/badge/FastAPI-0.109-teal)
+![Stack](https://img.shields.io/badge/TypeScript-5.5-blue)
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## ⚡ Quick Start
 
-**Use Lovable**
+### Pré-requisitos
+- Node.js 18+
+- Python 3.11+
+- npm/yarn
+- pip
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/e4595ccc-e3fa-48cc-a0aa-83631c9a7906) and start prompting.
+### Instalação Rápida
 
-Changes made via Lovable will be committed automatically to this repo.
+**1. Backend (Terminal 1):**
+```bash
+cd backend-python
+pip install -r requirements.txt
+python main.py
+```
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+**2. Frontend (Terminal 2):**
+```bash
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+**3. Acessar:**
+```
+Frontend: http://localhost:5173
+Backend API: http://localhost:8000
+Docs API: http://localhost:8000/docs
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+## 🏗️ Arquitetura
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Frontend
+- **React 18** com TypeScript
+- **Vite** para build
+- **TailwindCSS** para estilização
+- **Shadcn/ui** para componentes
+- **React Router** para navegação
+- **Tanstack Query** para cache de dados
 
-## What technologies are used for this project?
+### Backend
+- **FastAPI** framework Python
+- **SQLAlchemy** ORM
+- **JWT** para autenticação
+- **Pydantic** para validação
+- **SQLite/PostgreSQL** banco de dados
+- **Bcrypt** para senhas
 
-This project is built with:
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 📱 Funcionalidades
 
-## How can I deploy this project?
+### 👨‍🎓 Dashboard Aluno
+- ✅ Ver matérias inscritas
+- ✅ Acessar materiais didáticos
+- ✅ Receber mensagens do professor
+- ✅ Visualizar notas e feedback
 
-Simply open [Lovable](https://lovable.dev/projects/e4595ccc-e3fa-48cc-a0aa-83631c9a7906) and click on Share -> Publish.
+### 👨‍🏫 Dashboard Professor
+- ✅ Gerenciar turmas
+- ✅ Upload de materiais (PDF, vídeos, etc)
+- ✅ Lançar notas dos alunos
+- ✅ Enviar mensagens personalizadas
+- ✅ Visualizar lista de alunos
 
-## Can I connect a custom domain to my Lovable project?
+### 🔐 Sistema de Autenticação
+- ✅ Cadastro de usuários
+- ✅ Login com email/senha
+- ✅ Autenticação JWT
+- ✅ Proteção de rotas
+- ✅ Diferentes permissões (aluno/professor)
 
-Yes, you can!
+---
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 📁 Estrutura do Projeto
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```
+lumina/
+├── 📱 Frontend (React)
+│   ├── src/
+│   │   ├── components/ui/    # Componentes Shadcn
+│   │   ├── pages/           # Páginas da aplicação
+│   │   ├── services/        # Conexão com API
+│   │   ├── hooks/           # React Hooks
+│   │   └── lib/             # Utilitários
+│   ├── .env                 # Config frontend
+│   └── package.json
+│
+└── 🐍 Backend (Python)
+    └── backend-python/
+        ├── main.py          # App FastAPI
+        ├── config.py        # Configurações
+        ├── database/        # Modelos e conexão
+        ├── routes/          # Endpoints API
+        ├── schemas/         # Validação
+        ├── middleware/      # Auth JWT
+        ├── utils/           # Funções auxiliares
+        ├── .env            # Config backend
+        └── requirements.txt
+```
+
+---
+
+## 🔧 Configuração
+
+### Frontend (.env)
+```env
+VITE_API_URL=http://localhost:8000/api
+```
+
+### Backend (.env)
+```env
+SECRET_KEY=sua-chave-secreta-32-chars
+DATABASE_URL=sqlite:///./lumina.db
+CORS_ORIGINS=http://localhost:5173
+```
+
+---
+
+## 📊 Banco de Dados
+
+### Modelos principais:
+
+**Users**
+- Alunos e Professores
+- Autenticação JWT
+- Senhas hasheadas (bcrypt)
+
+**Classes (Turmas)**
+- Gerenciadas por professores
+- Alunos inscritos
+
+**Materials (Materiais)**
+- Upload de arquivos
+- Associados a turmas
+
+**Grades (Notas)**
+- Lançadas por professores
+- Com feedback opcional
+
+**Messages (Mensagens)**
+- Professor → Aluno
+- Por turma
+
+---
+
+## 🚀 Deploy
+
+### Frontend (Lovable/Vercel)
+- Build automático
+- Deploy em 1 clique
+
+### Backend (Railway/Render)
+```bash
+# Railway detecta automaticamente
+# Ou configure:
+Build: pip install -r requirements.txt
+Start: python main.py
+```
+
+### Variáveis de Ambiente
+Configure no painel do provedor de deploy
+
+---
+
+## 🧪 Testes
+
+### Testar API com curl:
+
+**Cadastro:**
+```bash
+curl -X POST http://localhost:8000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"name":"João","email":"joao@email.com","password":"123456","user_type":"student"}'
+```
+
+**Login:**
+```bash
+curl -X POST http://localhost:8000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"joao@email.com","password":"123456"}'
+```
+
+---
+
+## 📚 Documentação
+
+- **Setup Completo**: [SETUP_GUIDE.md](SETUP_GUIDE.md)
+- **Backend**: [backend-python/README.md](backend-python/README.md)
+- **API Endpoints**: [API_DOCUMENTATION.md](API_DOCUMENTATION.md)
+- **Checklist Backend**: [BACKEND_CHECKLIST.md](BACKEND_CHECKLIST.md)
+
+---
+
+## 🛠️ Stack Tecnológico
+
+### Frontend
+- React 18.3
+- TypeScript 5.5
+- Vite 5.4
+- TailwindCSS 3.4
+- Shadcn/ui
+- React Router 6
+- Tanstack Query 5
+
+### Backend
+- Python 3.11+
+- FastAPI 0.109
+- SQLAlchemy 2.0
+- Pydantic 2.5
+- JWT Auth
+- Bcrypt
+
+---
+
+## 📞 Suporte
+
+Para mais informações:
+- 📖 Leia [SETUP_GUIDE.md](SETUP_GUIDE.md)
+- 📚 Acesse http://localhost:8000/docs
+- 🐛 Verifique logs no console
+
+---
+
+## 🎉 Features
+
+- [x] Sistema de autenticação completo
+- [x] Dashboard aluno e professor
+- [x] Upload de materiais
+- [x] Sistema de notas
+- [x] Mensagens professor-aluno
+- [x] Banco de dados relacional
+- [x] API RESTful documentada
+- [x] Validação de dados
+- [x] Segurança (JWT + bcrypt)
+- [x] CORS configurável
+- [x] Deploy ready
+
+---
+
+## 📄 Licença
+
+Este projeto foi desenvolvido para fins educacionais.
+
+---
+
+**Desenvolvido com ❤️ usando React + Python**
