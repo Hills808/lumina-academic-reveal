@@ -61,9 +61,9 @@ const Index = () => {
           currentLine++;
         } else {
           clearInterval(interval);
-          setTimeout(() => setShowRealSite(true), 1000);
+          setTimeout(() => setShowRealSite(true), 800);
         }
-      }, 100);
+      }, 50);
 
       return () => clearInterval(interval);
     }
@@ -71,7 +71,7 @@ const Index = () => {
 
   const handleButtonClick = () => {
     setShowTrick(true);
-    setTimeout(() => setShowAnimation(true), 2000);
+    setTimeout(() => setShowAnimation(true), 1500);
   };
 
   const skipAnimation = () => {
@@ -185,22 +185,22 @@ const Index = () => {
 
   if (showAnimation) {
     return (
-      <div className="min-h-screen bg-[#1e1e1e] text-[#d4d4d4] font-mono p-8 relative overflow-auto">
+      <div className="min-h-screen bg-[#1e1e1e] text-[#d4d4d4] font-mono p-8 relative overflow-auto transition-all duration-500">
         <Button
           onClick={skipAnimation}
-          className="fixed top-4 right-4 z-50"
+          className="fixed top-4 right-4 z-50 animate-fade-in"
           variant="outline"
         >
-          Pular Animação
+          Pular
         </Button>
-        <div className="mb-4 flex items-center gap-2 text-sm">
+        <div className="mb-4 flex items-center gap-2 text-sm opacity-60">
           <span className="text-[#4ec9b0]">main.py</span>
           <span className="text-[#6a9955]">•</span>
           <span className="text-[#4ec9b0]">index.html</span>
         </div>
         <pre className="text-sm leading-relaxed">
           {codeLines.map((line, index) => (
-            <div key={index} className="code-line" style={{ animationDelay: `${index * 0.05}s` }}>
+            <div key={index} className="opacity-0 animate-[fade-in_0.3s_ease-out_forwards]" style={{ animationDelay: `${index * 0.03}s` }}>
               {line}
             </div>
           ))}
@@ -211,29 +211,31 @@ const Index = () => {
 
   if (showTrick) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <div className="text-center space-y-6 animate-scale-in">
-          <h1 className="text-6xl font-bold text-primary animate-pulse">
-            Achou mesmo que seria isso?
+      <div className="min-h-screen bg-background flex items-center justify-center p-4 transition-all duration-500">
+        <div className="text-center space-y-4 animate-scale-in">
+          <h1 className="text-5xl font-bold text-primary">
+            Ops! 👀
           </h1>
-          <p className="text-xl text-muted-foreground">Aguarde, algo incrível está sendo construído...</p>
+          <p className="text-lg text-muted-foreground">Montando algo melhor...</p>
         </div>
       </div>
     );
   }
 
-  // Simple initial version
+  // Simple initial version - looks rushed
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-6 text-center">
-        <h1 className="text-4xl font-bold">Sistema Acadêmico</h1>
-        <p className="text-muted-foreground">Acesse sua conta</p>
+    <div className="min-h-screen bg-gradient-to-br from-background to-muted/20 flex items-center justify-center p-4">
+      <div className="w-full max-w-sm space-y-8 text-center">
+        <div className="space-y-2">
+          <h1 className="text-3xl font-bold tracking-tight">LUMINA</h1>
+          <p className="text-sm text-muted-foreground">Sistema Acadêmico</p>
+        </div>
         <div className="space-y-3">
-          <Button onClick={handleButtonClick} className="w-full" size="lg">
-            Login
+          <Button onClick={handleButtonClick} className="w-full transition-all duration-300" size="lg">
+            Entrar
           </Button>
-          <Button onClick={handleButtonClick} variant="outline" className="w-full" size="lg">
-            Cadastrar
+          <Button onClick={handleButtonClick} variant="outline" className="w-full transition-all duration-300" size="lg">
+            Criar Conta
           </Button>
         </div>
       </div>
