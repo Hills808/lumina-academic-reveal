@@ -232,10 +232,11 @@ const Index = () => {
 
   // Simple initial version - looks rushed
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-xs space-y-6 text-center">
-        <h1 className="text-2xl font-bold">LUMINA</h1>
-        <div className="space-y-2">
+    <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
+      <div className="bg-card border border-border rounded-lg p-8 w-full max-w-sm space-y-4">
+        <h1 className="text-xl font-semibold text-center">LUMINA</h1>
+        <p className="text-sm text-muted-foreground text-center">Sistema Acadêmico</p>
+        <div className="space-y-2 pt-2">
           <Button onClick={handleButtonClick} className="w-full" variant="default">
             Entrar
           </Button>
