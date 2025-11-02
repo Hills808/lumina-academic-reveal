@@ -17,11 +17,39 @@ Sistema completo de gestão educacional com dashboard para alunos e professores.
 - npm/yarn
 - pip
 
-### Instalação Rápida
+### 🚀 Rodando no GitHub Codespace
+
+**1. Configure o Backend:**
+```bash
+cd backend-python
+cp .env.example .env
+pip install -r requirements.txt
+```
+
+**2. Inicie o Backend (Terminal 1):**
+```bash
+cd backend-python
+python main.py
+```
+O backend estará rodando em: `http://localhost:8000`
+
+**3. Inicie o Frontend (Terminal 2):**
+```bash
+npm install
+npm run dev
+```
+O frontend detectará automaticamente a URL do Codespace!
+
+**4. Acessar:**
+- O Codespace abrirá automaticamente o frontend
+- API Docs: Troque a porta 5173 por 8000 na URL e adicione `/docs`
+
+### 💻 Rodando Localmente
 
 **1. Backend (Terminal 1):**
 ```bash
 cd backend-python
+cp .env.example .env
 pip install -r requirements.txt
 python main.py
 ```
@@ -176,32 +204,11 @@ Configure no painel do provedor de deploy
 
 ---
 
-## 🧪 Testes
+## 📚 Testar a API
 
-### Testar API com curl:
-
-**Cadastro:**
-```bash
-curl -X POST http://localhost:8000/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"name":"João","email":"joao@email.com","password":"123456","user_type":"student"}'
-```
-
-**Login:**
-```bash
-curl -X POST http://localhost:8000/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"joao@email.com","password":"123456"}'
-```
-
----
-
-## 📚 Documentação
-
-- **Setup Completo**: [SETUP_GUIDE.md](SETUP_GUIDE.md)
-- **Backend**: [backend-python/README.md](backend-python/README.md)
-- **API Endpoints**: [API_DOCUMENTATION.md](API_DOCUMENTATION.md)
-- **Checklist Backend**: [BACKEND_CHECKLIST.md](BACKEND_CHECKLIST.md)
+Após iniciar o backend, acesse a documentação interativa:
+- **Swagger UI**: `http://localhost:8000/docs`
+- **Health Check**: `http://localhost:8000/health`
 
 ---
 
@@ -229,9 +236,9 @@ curl -X POST http://localhost:8000/api/auth/login \
 ## 📞 Suporte
 
 Para mais informações:
-- 📖 Leia [SETUP_GUIDE.md](SETUP_GUIDE.md)
-- 📚 Acesse http://localhost:8000/docs
+- 📚 Acesse a documentação da API: http://localhost:8000/docs
 - 🐛 Verifique logs no console
+- 💬 Consulte este README para instruções
 
 ---
 
