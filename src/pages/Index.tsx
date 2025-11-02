@@ -232,17 +232,23 @@ const Index = () => {
 
   // Simple initial version - looks rushed
   return (
-    <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
-      <div className="bg-card border border-border rounded-lg p-8 w-full max-w-sm space-y-4">
-        <h1 className="text-xl font-semibold text-center">LUMINA</h1>
-        <p className="text-sm text-muted-foreground text-center">Sistema Acadêmico</p>
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+      <div className="bg-white border-2 border-black p-8 w-full max-w-sm space-y-4">
+        <h1 className="text-xl font-semibold text-center text-black">LUMINA</h1>
+        <p className="text-sm text-black/70 text-center">Sistema Acadêmico</p>
         <div className="space-y-2 pt-2">
-          <Button onClick={handleButtonClick} className="w-full" variant="default">
+          <button 
+            onClick={handleButtonClick} 
+            className="w-full bg-black text-white py-2 px-4 rounded hover:bg-black/90 transition-colors"
+          >
             Entrar
-          </Button>
-          <Button onClick={handleButtonClick} className="w-full" variant="outline">
+          </button>
+          <button 
+            onClick={handleButtonClick} 
+            className="w-full bg-white text-black border-2 border-black py-2 px-4 rounded hover:bg-black/5 transition-colors"
+          >
             Cadastrar
-          </Button>
+          </button>
         </div>
       </div>
     </div>
